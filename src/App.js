@@ -4,6 +4,9 @@ import 'normalize.css'
 import './reset.css'
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
+import UserDialog from './UserDialog'
+import {getCurrentUser, signOut} from './leanCloud'
+
 
 let id = 0
 function idMaker(){
@@ -11,15 +14,17 @@ function idMaker(){
   return id
 }
 
+
+
+
 class App extends Component{
   constructor(props){
     super(props)
     this.state = {
+      // 读取上次的user
+      user: getCurrentUser() || {},
       newTodo:'',
-      todoList:[
-        {id:1,title:'title'},
-        {id:2,title:'title2'}
-      ]
+      todoList:[]
     }
   }
 
@@ -56,6 +61,21 @@ class App extends Component{
     this.setState(this.state)
   }
 
+
+  signOut(){
+      signOut()
+      let stateCopy = JSON.parse(JSON.stringify(this.state))
+      // 将user重置为一个对象
+      stateCopy.user = {}
+      this.setState(stateCopy)
+  }
+
+  onSignUpOrSignIn(user){
+    let stateCopy = JSON.parse(JSON.stringify(this.state)) 
+    stateCopy.user = user
+    this.setState(stateCopy)
+  }
+
   render(){
     let todos = this.state.todoList.filter((item)=> !item.deleted).map((item,index) => {
       return (
@@ -70,7 +90,9 @@ class App extends Component{
 
     return(
       <div className="App">
-        <h1>我的待办</h1>
+        <h1>{this.state.user.username||'我'}的待办
+          {this.state.user.id ? <button onClick={this.signOut.bind(this)}>登出</button> : null}
+        </h1>
         <div className="inputWrapper">
           <TodoInput content={this.state.newTodo} 
                      onChange={this.changeTitle.bind(this)}
@@ -79,6 +101,11 @@ class App extends Component{
         <ol className="TodoList">
           {todos}
         </ol>
+        {this.state.user.id ? 
+          null : 
+          <UserDialog 
+            onSignUp={this.onSignUpOrSignIn.bind(this)} 
+            onSignIn={this.onSignUpOrSignIn.bind(this)}/>}
       </div>
     )
   }
