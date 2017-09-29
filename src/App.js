@@ -5,7 +5,7 @@ import './reset.css'
 import TodoInput from './TodoInput'
 import TodoItem from './TodoItem'
 import UserDialog from './UserDialog'
-import {getCurrentUser, signOut} from './leanCloud'
+import {getCurrentUser, signOut,TodoModel} from './leanCloud'
 
 
 let id = 0
@@ -15,34 +15,47 @@ function idMaker(){
 }
 
 
-
-
 class App extends Component{
   constructor(props){
-    super(props)
-    this.state = {
-      // 读取上次的user
-      user: getCurrentUser() || {},
-      newTodo:'',
-      todoList:[]
+      super(props)
+      this.state = {
+        // 读取上次的user
+        user: getCurrentUser() || {},
+        newTodo:'',
+        todoList:[]
+      }
+
+    let user = getCurrentUser()
+    if (user) {
+      TodoModel.getByUser(user, (todos) => {
+        let stateCopy = JSON.parse(JSON.stringify(this.state))
+        stateCopy.todoList = todos
+        this.setState(stateCopy)
+      })
     }
   }
 
   
   addTodo(e){
-    this.state.todoList.push({
-      id:idMaker(),
+    let newTodo = {
       title:e.target.value,
-      status:null,
+      status:'',
       deleted:false
-    })
+    }
 
-    this.setState({
-      newTodo:'',
-      todoList:this.state.todoList
+    TodoModel.create(newTodo, (id) => {
+        newTodo.id = id
+        this.state.todoList.push(newTodo)
+        this.setState({
+          newTodo: '',
+          todoList: this.state.todoList
+        })
+      }, (error) => {
+        console.log(error)
     })
-
   }
+
+  
 
   changeTitle(e){
     this.setState({
@@ -52,13 +65,21 @@ class App extends Component{
   }
  
   toggle(e,todo){
+    let oldStatus = todo.status
     todo.status = todo.status === 'completed' ? '' : 'completed'
-    this.setState(this.state)
+    TodoModel.update(todo, () => {
+      this.setState(this.state)
+    }, (error) => {
+      todo.status = oldStatus
+      this.setState(this.state)
+    })
   }
 
   delete(e,todo){
-    todo.deleted = true
-    this.setState(this.state)
+    TodoModel.destroy(todo.id, () => {
+      todo.deleted = true
+      this.setState(this.state)
+    })
   }
 
 
