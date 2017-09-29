@@ -49,10 +49,11 @@ body{
 }
 
 .UserDialog-Wrapper{
-  
+  /* 全屏 */
   position: fixed; top: 0; left: 0; bottom: 0; right: 0; 
-  
+  /* 水平垂直居中 */
   display: flex; justify-content: center; align-items: center;
+  background: hsla(0,0%,0%,0.40);
 }
 
 .UserDialog{
@@ -64,28 +65,56 @@ body{
   box-shadow: 0 0 1em hsla(0,0%,0%,0.35);
 }
 
-.UserDialog > nav{ 
-  padding: 1em; 
+.UserDialog .signInOrSignUp > nav:first-child{ 
+  padding: 1em;
   margin-left: -2em;
 }
 
-.UserDialog > nav > label{ 
+.UserDialog .signInOrSignUp > nav:first-child label{ 
   margin-left: 2em; 
   cursor: pointer;
+}
+
+.UserDialog .signInOrSignUp > .panes { 
+  padding: 0 1em 1em; 
 }
 
 .UserDialog > .panes{
   padding: 0 1em 1em;
 }
 
+.UserDialog .forgotPassword > h3 { 
+  padding: 1em; 
+}
+.UserDialog .forgotPassword > form { 
+  padding: 0 1em 1em; 
+}
+
+
+
 .UserDialog form>.row{
   display: flex; 
   padding: .3em 0;
 }
 
+
+
 .UserDialog form>.row.actions{ 
   padding-left: 4em; 
+  display: flex; 
+  align-items: center;
+}
+.UserDialog form>.row.actions button{ 
+  margin-right: .5em; 
+}
 
+.UserDialog form>.row.actions a{
+  color: #DB0505;
+}
+
+.UserDialog button{
+  font: inherit; 
+  padding: .2em;
 }
 
 .UserDialog form>.row.actions button{
@@ -111,5 +140,14 @@ body{
 
 input:focus {
   outline: none;
-  padding-right:50px;
+  padding-right:30px;
+}
+
+
+form.forgotPassword input:focus{
+  padding-right:0 !important;
+}
+
+form.forgotPassword button{
+  padding: .2em 2.5em !important;
 }
