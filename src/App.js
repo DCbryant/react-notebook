@@ -8,11 +8,7 @@ import UserDialog from './UserDialog'
 import {getCurrentUser, signOut,TodoModel} from './leanCloud'
 
 
-let id = 0
-function idMaker(){
-  id += 1
-  return id
-}
+
 
 
 class App extends Component{
@@ -111,17 +107,24 @@ class App extends Component{
 
     return(
       <div className="App">
-        <h1>{this.state.user.username||'我'}的待办
-          {this.state.user.id ? <button onClick={this.signOut.bind(this)}>登出</button> : null}
-        </h1>
-        <div className="inputWrapper">
-          <TodoInput content={this.state.newTodo} 
-                     onChange={this.changeTitle.bind(this)}
-                     onSubmit={this.addTodo.bind(this)} />
-        </div>
-        <ol className="TodoList">
-          {todos}
-        </ol>
+        {
+          this.state.user.id?
+          <div className="Todo">
+            <h2>{this.state.user.username||'我'}的待办
+              {this.state.user.id ? <i className="fa fa-sign-out" aria-hidden="true" onClick={this.signOut.bind(this)}></i> : null}
+            </h2>
+            <div className="inputWrapper">
+              <TodoInput content={this.state.newTodo} 
+                        onChange={this.changeTitle.bind(this)}
+                        onSubmit={this.addTodo.bind(this)} />
+            </div>
+            <ol className="TodoList">
+              {todos}
+            </ol>
+          </div>
+          :null
+        }
+        
         {this.state.user.id ? 
           null : 
           <UserDialog 

@@ -17,7 +17,7 @@ import React,{Component} from 'react'
                        onChange = {this.toggle.bind(this)}
                  />
                  <span className="title">{this.props.todo.title}</span>
-                 <button className="delete-btn" onClick={this.delete.bind(this)}>删除</button>
+                 <i className="fa fa-university" aria-hidden="true" onClick={this.delete.bind(this)}></i>
             </div>
         )
     }

@@ -18,6 +18,7 @@ import React,{Component} from 'react'
     render(){
         return(
             <input type="text" className="TodoInput"
+                placeholder="今天要做什么呢？"
                 onChange={this.changeTitle.bind(this)}
                 value={this.props.content} 
                 onKeyPress={this.submit.bind(this)} />
