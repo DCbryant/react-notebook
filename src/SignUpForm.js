@@ -2,7 +2,7 @@ import React from 'react';
 export default function (props) {
   return (
     <form className="signUp" onSubmit={props.onSubmit.bind(this)}> {/* 注册*/}
-      <h3>登陆</h3>
+      <h3>注册</h3>
       <div className="row">
         <input type="text" value={props.formData.email}
           placeholder="email"

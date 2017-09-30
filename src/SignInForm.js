@@ -4,7 +4,7 @@ export default class SignInForm extends Component {
   render () {
     return (
       <form className="signIn" onSubmit={this.props.onSubmit}> 
-        <h3>注册</h3>
+        <h3>登陆</h3>
         <div className="row">
           <input type="text" value={this.props.formData.username}
             placeholder="username"
