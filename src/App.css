@@ -6,11 +6,8 @@
   min-height: 100vh;
 }
 
-.App {
-  color: #333;
-  border-radius: 4px;
-  background-color: salmon;
-  box-shadow: 0 0 1em hsla(0, 0%, 0%, 0.15);
+.App { 
+  font: Tahoma,Helvetica,Arial,"\5b8b\4f53",sans-serif;
 }
 
 i{
@@ -18,29 +15,76 @@ i{
 }
 
 .App .Todo{
+  color: #333;
+  border-radius: 4px;
+  box-shadow: 0 0 1em hsla(0, 0%, 0%, 0.15);
   min-width: 30em;
+  min-height: 30em;
   margin-top: 50px;
   color: #888;
+  background:transparent url(https://i.loli.net/2017/10/10/59dc2b8f1a347.jpg) no-repeat center;
+  background-size: cover;
+}
+
+.App .Todo::before{
+  content: '';
+  display: table;
+}
+
+.App .Todo::after{
+  content: '';
+  display: table;
 }
 
 .App .Todo h2{
   text-align: center;
+  margin-top: 30px;
   margin-bottom: 30px;
   position: relative;
+  color: #fff;
+  font-weight: normal;
 }
 
 .App .Todo h2 i{
   position: absolute;
   top: 4px;
-  right: 4px;
+  right: 16px;
 }
 
 i.fa-university{
-  color: red;
+  color: salmon;
+}
+
+.inputWrapper{
+  margin: 0 20px;
+}
+
+.TodoInput{
+  background-color: inherit;
+  border: 0;
+  color: #fff;
+  border-bottom: 1px solid #fff;
+}
+
+.TodoInput:focus{
+  outline-color: #fff;
+  border-bottom: 1px solid transparent;
+}
+
+::-webkit-input-placeholder { 
+  color:#fff;
+}
+
+.App .Todo .TodoList{
+  margin: 0 12px;
+}
+
+.App .Todo .TodoList >li{
+  color: #fff;
 }
 
 .App .Todo .TodoList >li:nth-child(odd){
-  background-color: #eee;
+  background-color: inherit;
 }
 
 .App .Todo .TodoList > li:nth-child(even){
